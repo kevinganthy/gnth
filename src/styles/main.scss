@@ -1,0 +1,53 @@
+@use '@styles/vars';
+@use '@styles/mixins';
+
+:root {
+	font-size: 16px;
+	font-family: 'Inconsolata', monospace;
+	line-height: 1.3;
+
+	@include mixins.large {
+		font-size: 18px;
+	}
+}
+
+body {
+	margin: 0;
+	background: vars.$color-bg-light;
+	color: vars.$color-black;
+	min-height: 100dvh;
+	display: flex;
+	flex-direction: column;
+	overflow-x: hidden;
+
+	@include mixins.large {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		overflow-x: hidden;
+		animation: 4s ease 0.1s forwards overflow;
+
+		@keyframes overflow {
+			0% {
+				overflow-y: hidden;
+			}
+			100% {
+				overflow-y: auto;
+			}
+		}
+	}
+}
+
+main {
+	flex-grow: 1;
+
+	@include mixins.tablet {
+		max-width: 768px;
+		margin: 0 auto;
+	}
+
+	@include mixins.large {
+		max-width: none;
+		margin: 0;
+		width: 100%;
+	}
+}

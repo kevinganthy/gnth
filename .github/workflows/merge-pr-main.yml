@@ -1,0 +1,138 @@
+name: Merge PR
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+
+concurrency:
+  group: 'merge'
+  cancel-in-progress: true
+
+
+permissions:
+  actions: write       
+  checks: write        
+  pull-requests: write 
+  contents: read
+  packages: write
+
+
+jobs:
+  build:
+    environment: production
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create env file
+        run: |
+          echo "VITE_SERVICE_ID=${{ secrets.VITE_SERVICE_ID }}" >> .env
+          echo "VITE_TEMPLATE_ID=${{ secrets.VITE_TEMPLATE_ID }}" >> .env
+          echo "VITE_USER_ID=${{ secrets.VITE_USER_ID }}" >> .env
+          echo "VITE_HOURLY_RATE=${{ vars.VITE_HOURLY_RATE }}" >> .env
+
+      - name: Unit tests
+        id: unit-tests
+        run: |
+          npm run test:coverage > unit.log
+          {
+            echo 'UNIT<<EOF'
+            cat unit.log | grep \|
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+        
+      - name: Comment on PR
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            ## Unit tests coverage
+            ${{ join(steps.unit-tests.outputs.UNIT, '\n') }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: "github-actions[bot]"
+          allow-repeats: true
+
+      - name: Integration tests
+        id: integration-tests
+        # npx playwright install-deps
+        run: |
+          npx playwright install
+          npm run test:integration --reporter=list > integration.log
+          {
+            echo 'INTEGRATION<<EOF'
+            cat integration.log
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+      
+      - name: Comment on PR
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            ## Integration tests
+            ${{ join(steps.integration-tests.outputs.INTEGRATION, '\n') }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: "github-actions[bot]"
+          allow-repeats: true
+
+      - name: Build
+        run: npm run build
+  
+      - name: Deploy to surge
+        run: |
+            npm install -g surge
+            cd build
+            surge --project . --token ${{ secrets.SURGE_TOKEN }}
+     
+    
+  performances:
+    environment: production
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    needs: build
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+
+    steps:
+      - name: Page Speed Insights
+        uses: wicksipedia/pagespeed-insights@main
+        id: pagespeed-insights
+        with:
+          url: ${{ vars.PREVIEW_URL }}
+          categories: |
+            accessibility
+            best_practices
+            performance
+            SEO
+          strategy: desktop
+          delayBetweenRetries: 10000
+          maximumNumberOfRetries: 2
+          key: ${{ secrets.PAGESPEED_INSIGHTS_API_KEY }}
+          
+      - name: Comment on PR with insights
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: |
+            ## PageSpeed Insights
+            Accessibility : ${{ steps.pagespeed-insights.outputs.accessibility }}
+            Best practices : ${{ steps.pagespeed-insights.outputs.best_practices }}
+            Performance : ${{ steps.pagespeed-insights.outputs.performance }}
+            SEO : ${{ steps.pagespeed-insights.outputs.seo }}
+            View the full report <https://pagespeed.web.dev/report?url=${{ vars.PREVIEW_URL }}>
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: "github-actions[bot]"
+          allow-repeats: true

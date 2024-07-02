@@ -1,0 +1,55 @@
+name: Send to production
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: 'production'
+  cancel-in-progress: true
+
+jobs:
+  build:
+    environment: production
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: .
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create env file
+        run: |
+          echo "VITE_SERVICE_ID=${{ secrets.VITE_SERVICE_ID }}" >> .env
+          echo "VITE_TEMPLATE_ID=${{ secrets.VITE_TEMPLATE_ID }}" >> .env
+          echo "VITE_USER_ID=${{ secrets.VITE_USER_ID }}" >> .env
+          echo "VITE_HOURLY_RATE=${{ vars.VITE_HOURLY_RATE }}" >> .env
+
+      - name: Unit tests
+        run: npm run test:unit
+
+      - name: Integration tests
+        # npx playwright install-deps
+        run: |
+          npx playwright install
+          npm run test:integration
+
+      - name: Build
+        run: npm run build
+
+      - name: Copy files
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 22
+          source: 'build'
+          target: /var/www/html/${{ vars.CLIENT_NAME }}
