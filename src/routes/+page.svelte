@@ -38,9 +38,8 @@
 		sections.forEach((element) => observer.observe(element));
 	});
 
-	const title = 'Agence web GNTH';
-	const description =
-		'GNTH est une agence web qui propose des services de qualité à des tarifs abordables. Avec une équipe joyeuse et passionnée, nous sommes prêts à concrétiser vos projets web les plus audacieux, près de chez vous ou à distance.';
+	const title = 'Agence web GNTH en Charente-Maritime, Loire et Savoie';
+	const description = 'Des services de qualité à des tarifs abordables. Une équipe joyeuse et passionnée pour vos projets les plus audacieux, près de chez vous ou à distance.';
 	const url = 'https://gnth.fr';
 	const icon = '/gnth.png';
 </script>
