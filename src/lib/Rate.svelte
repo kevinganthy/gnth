@@ -7,6 +7,9 @@
 	export let isOption: boolean = false;
 
 	const price = import.meta.env.VITE_HOURLY_RATE * hours;
+
+	// Step required for accessible text in DOM
+	const displayedRate = `${isOption ? '+' : ''} ${price} ${unit}`;
 	const hoursEquivalent = `(soit ${hours} heure${hours > 1 ? 's' : ''})`;
 </script>
 
@@ -14,7 +17,7 @@
 	{#if !mainRate}
 		<h3>{title}</h3>
 	{/if}
-	<strong>{isOption ? '+' : ''} {price} {unit}</strong>
+	<strong>{displayedRate}</strong>
 	{#if mainRate && asterisk}
 		<small>{asterisk}</small>
 	{/if}
