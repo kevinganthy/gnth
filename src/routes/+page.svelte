@@ -90,7 +90,7 @@
 				src="/kevin.webp"
 				alt="Kévin, fondateur de l'agence web, Le Gua en Charente-Maritime (17)"
 			/>
-			<p>Kévin, Le Gua 17</p>
+			<p aria-hidden="true">Kévin, Le Gua 17</p>
 		</div>
 
 		<p>
@@ -106,7 +106,7 @@
 			correspondent à vos besoins. Bénéficiez d'un accompagnement pro, efficace et précis 🚀.
 		</p>
 
-		<address>🌊 Charente-Maritime (17) 🌲 Loire (42) 🏔 Savoie (73)</address>
+		<address aria-hidden="true">🌊 Charente-Maritime (17) 🌲 Loire (42) 🏔 Savoie (73)</address>
 
 		<div class="team">
 			<img
@@ -116,8 +116,8 @@
 				src="/aurelie.webp"
 				alt="Aurélie, interlocutrice à Chambéry en Savoie (73)"
 			/>
-			<p>Aurélie</p>
-			<address>Chambéry 73</address>
+			<p aria-hidden="true">Aurélie</p>
+			<address aria-hidden="true">Chambéry 73</address>
 			<img
 				height="220"
 				width="220"
@@ -125,8 +125,8 @@
 				src="/emilie.webp"
 				alt="Emilie, interlocutrice à Royan en Charente-Maritime (17)"
 			/>
-			<p>Emile</p>
-			<address>Royan 17</address>
+			<p aria-hidden="true">Emilie</p>
+			<address aria-hidden="true">Royan 17</address>
 			<img
 				height="220"
 				width="220"
@@ -134,8 +134,8 @@
 				src="/faustine.webp"
 				alt="Faustine, interlocutrice à Marennes en Charente-Maritime (17)"
 			/>
-			<p>Faustine</p>
-			<address>Marennes 17</address>
+			<p aria-hidden="true">Faustine</p>
+			<address aria-hidden="true">Marennes 17</address>
 			<img
 				height="220"
 				width="220"
@@ -143,8 +143,8 @@
 				src="/laura.webp"
 				alt="Laura, interlocutrice à Roanne dans la Loire (42)"
 			/>
-			<p>Laura</p>
-			<address>Roanne 42</address>
+			<p aria-hidden="true">Laura</p>
+			<address aria-hidden="true">Roanne 42</address>
 		</div>
 	</section>
 
@@ -269,14 +269,14 @@
 				width="120"
 				loading="lazy"
 				src="/kevin120.webp"
-				alt="Kévin, expert développeur"
+				alt=""
 			/>
 			<img
 				height="120"
 				width="120"
 				loading="lazy"
 				src="/faustine120.webp"
-				alt="Faustine, experte relation clients"
+				alt=""
 			/>
 		</div>
 	</section>
