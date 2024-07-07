@@ -7,9 +7,10 @@
 	export let isOption: boolean = false;
 
 	const price = import.meta.env.VITE_HOURLY_RATE * hours;
+	const hoursEquivalent = `(soit ${hours} heure${hours > 1 ? 's' : ''})`;
 </script>
 
-<article class={mainRate ? 'main' : ''} aria-label={title}>
+<article class={mainRate ? 'main' : ''} aria-label="{title} {price} {unit}">
 	{#if !mainRate}
 		<h3>{title}</h3>
 	{/if}
@@ -19,7 +20,7 @@
 	{/if}
 	<div>
 		<slot />
-		<small>(soit {hours} heure{hours > 1 ? 's' : ''})</small>
+		<small>{hoursEquivalent}</small>
 	</div>
 </article>
 
