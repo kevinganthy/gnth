@@ -102,7 +102,7 @@
 			{:else if formStatus === FORM_STATUS_SUCCESS}
 				<div class="form-status--success">
 					<p>
-						✅ Votre demande a ien été envoyée. Nous vous recontacterons dans les plus brefs délais.
+						✅ Votre demande a bien été envoyée. Nous vous recontacterons dans les plus brefs délais.
 					</p>
 					<button class="close" on:click={onCancel}>Fermer</button>
 				</div>
