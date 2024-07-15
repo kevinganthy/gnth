@@ -13,10 +13,11 @@
 	let isScrolled = false;
 
 	const onScrollClick = () => {
-		window.scrollTo({
-			top: isScrolled ? 0 : window.innerHeight + 64,
-			behavior: 'smooth'
-		});
+		if ( isScrolled ) {
+			document.querySelector("#welcome").scrollIntoView( {behavior: "smooth"});
+		} else {
+			document.querySelector("#site").scrollIntoView( {behavior: "smooth"});
+		}
 	};
 
 	const onVisible = (entries: IntersectionObserverEntry[]) => {
@@ -28,9 +29,9 @@
 	};
 
 	onMount(() => {
-		isScrolled = window.scrollY > 0;
+		isScrolled = window.scrollY > window.innerHeight + (window.innerHeight * .75);
 		window.addEventListener('scroll', () => {
-			isScrolled = window.scrollY > 0;
+			isScrolled = window.scrollY > window.innerHeight + (window.innerHeight * .75);
 		});
 
 		const sections = document.querySelectorAll('section');
@@ -103,10 +104,14 @@
 		</p>
 		<p>
 			Autour d'une solution interne et novatrice, nous façonnons des sites et applications web qui
-			correspondent à vos besoins. Bénéficiez d'un accompagnement pro, efficace et précis 🚀.
+			correspondent à vos besoins. Bénéficiez d'un accompagnement pro, efficace et précis.
 		</p>
 
-		<address aria-hidden="true">🌊 Charente-Maritime (17) 🌲 Loire (42) 🏔 Savoie (73)</address>
+		<address aria-hidden="true">
+			🌊 Charente-Maritime (17)<br>
+			🌲 Loire (42)<br>
+			🏔 Savoie (73)
+		</address>
 
 		<div class="team">
 			<img
@@ -372,10 +377,10 @@
 
 				@include mixins.xl {
 					grid-template-columns: 1fr auto;
-					margin: 3rem 0 3rem 3rem;
-					gap: 1rem 6rem;
+					margin: 3rem auto 3rem auto;
+					gap: 1rem 1rem;
 					align-content: center;
-					max-width: unset;
+					max-width: 1440px;
 					min-height: unset;
 				}
 
@@ -406,6 +411,7 @@
 							margin: 0 0 0 auto;
 							max-width: 480px;
 							max-height: 480px;
+							border-radius: vars.$radius;
 						}
 					}
 					p {
@@ -606,6 +612,7 @@
 			color: vars.$color-green;
 			font-weight: bold;
 			font-size: 1.25rem;
+			z-index: 20;
 
 			&.scroll {
 				display: none;
@@ -639,13 +646,13 @@
 
 			&.to-be-contacted {
 				position: sticky;
-				top: 92dvh;
-				margin: 2rem auto 2rem auto;
+				top: 93dvh;
+				margin: 0 0 0 auto;
 				padding: 0.75rem 2rem;
 				border-radius: vars.$radius * 2;
 				z-index: 2;
 				font-size: 0.85rem;
-
+				
 				@include mixins.large {
 					top: calc(100dvh - 80px);
 					margin: 0 2rem 0 auto;
