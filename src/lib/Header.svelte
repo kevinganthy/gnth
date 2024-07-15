@@ -2,6 +2,36 @@
 	import { actualSection } from '$lib/store';
 	import { onMount } from 'svelte';
 
+
+	const adjustHeader = () => {
+		const header: HTMLElement = document.querySelector('header') as HTMLElement;
+		const nav: HTMLElement = header.querySelector('nav') as HTMLElement;
+		const address: HTMLElement = header.querySelector('address') as HTMLElement;
+		const img: HTMLImageElement = header.querySelector('img') as HTMLImageElement;
+		const span: HTMLElement = header.querySelector('span') as HTMLElement;
+
+		const isMobile = window.innerWidth < 1240;
+
+		const width = window.innerWidth - window.scrollY;
+		const margin = window.innerHeight / 4 - window.scrollY / 4;
+		const opacity = 1 - width / window.innerWidth;
+
+		if ( !isMobile) {
+			if ( width < 420 ) {
+				nav.style.opacity = address.style.opacity = '1';
+				span.style.opacity = '0';
+			 	header.style.width = `${420}px`;
+			 	img.style.marginTop = `3rem`;
+			} else {
+			 	header.style.width = `${width}px`;
+			 	img.style.marginTop = `calc(${margin}px + 3rem)`;
+				nav.style.opacity = address.style.opacity = `${opacity}`;
+				span.style.opacity = `${1 - opacity}`;
+			}
+		}
+
+	};
+
 	onMount(() => {
 		const links: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('nav a');
 
@@ -14,6 +44,9 @@
 				}
 			});
 		});
+
+		document.addEventListener('scroll', adjustHeader);
+		adjustHeader();
 	});
 </script>
 
@@ -40,23 +73,24 @@
 	@use '@styles/mixins';
 	@use '@styles/vars';
 
-	$factor: 1.5;
-	$delay: 1.5;
-	$timing: ease-in-out;
+
+	span, nav {
+		transition: opacity 0.5s;
+	}
 
 	header {
 		background: vars.$color-bg-dark;
 		display: flex;
 		flex-direction: column;
-		animation: 1s * $factor $timing 1s * $delay forwards header-size;
 		height: 100dvh;
-		position: relative;
 		box-sizing: border-box;
-
+		width: 100vw;
+		padding: .5rem 2rem;
+		
 		@include mixins.large {
-			width: 100vw;
 			position: sticky;
 			top: 0;
+			padding: .5rem;
 		}
 
 		h1 {
@@ -64,12 +98,11 @@
 		}
 
 		img {
-			animation: 1s * $factor $timing 1s * $delay forwards header-logo;
 			border-radius: vars.$radius;
 			aspect-ratio: 1/1;
-			width: min-content;
-			height: 50vw;
-			margin: calc(50vh - 25vw) auto 0 25vw;
+			width: 50vw;
+			max-width: 240px;
+			margin: auto auto 0 auto;
 			z-index: 2;
 
 			@include mixins.large {
@@ -88,7 +121,6 @@
 			margin: 1rem auto auto 50%;
 			transform: translateX(-50%);
 			opacity: 1;
-			animation: 1s * $factor $timing 1s * $delay forwards header-title;
 
 			@include mixins.large {
 				margin: 1rem auto auto auto;
@@ -102,22 +134,24 @@
 
 			@include mixins.large {
 				display: block;
-				opacity: 0;
 				gap: 1rem;
-				margin: auto 0 0 0;
-				animation: 1s * $factor $timing 1s * $delay forwards appear;
+				opacity: 0;
 
 				ul {
 					display: flex;
 					flex-direction: column;
 					gap: 2rem;
 					list-style: none;
-					padding: 0;
 					margin: 0;
+					align-items: flex-start;
+					padding-left: .5rem;
 				}
 
 				li {
 					margin: 0;
+					&:hover {
+						transform: scale(1.1);
+					}
 				}
 
 				a {
@@ -128,98 +162,25 @@
 						color: vars.$color-green-light;
 						font-weight: bold;
 					}
+
 				}
 			}
 		}
 
 		address {
-			opacity: 0;
 			display: flex;
 			gap: 1rem;
 			align-items: end;
-			animation: 1s * $factor $timing 1s * $delay forwards appear;
 			margin: 0 0 0 auto;
+			opacity: 0;
 
 			@include mixins.large {
-				margin: auto auto 0 auto;
+				margin: auto auto 1rem auto;
 			}
 
 			a {
 				color: vars.$color-bg-light;
 				text-decoration: none;
-			}
-		}
-	}
-
-	@keyframes header-logo {
-		to {
-			height: 80px;
-			margin: 0 auto 0 0px;
-		}
-	}
-
-	@keyframes header-size {
-		to {
-			padding: 20px;
-			height: 135px;
-		}
-	}
-
-	@keyframes header-title {
-		from {
-			opacity: 1;
-		}
-		10% {
-			opacity: 0;
-		}
-		50% {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-			position: absolute;
-			top: 1rem;
-			font-size: clamp(2rem, 6vw, 2rem);
-			margin: 0 auto auto 100px;
-			padding: 0;
-			height: 0;
-			transform: none;
-		}
-	}
-
-	@keyframes appear {
-		from {
-			opacity: 0;
-		}
-		50% {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-
-	@include mixins.large {
-		@keyframes header-logo {
-			to {
-				margin: 3rem auto 0;
-			}
-		}
-
-		@keyframes header-size {
-			to {
-				padding: 20px;
-				width: 420px;
-			}
-		}
-
-		@keyframes header-title {
-			to {
-				font-size: 32px;
-				margin: 1rem auto;
-				padding: 0;
-				height: 0;
-				transform: none;
 			}
 		}
 	}
