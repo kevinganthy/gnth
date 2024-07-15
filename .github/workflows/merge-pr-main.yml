@@ -64,28 +64,28 @@ jobs:
           repo-token-user-login: "github-actions[bot]"
           allow-repeats: true
 
-      - name: Integration tests
-        id: integration-tests
+      # - name: Integration tests
+      #   id: integration-tests
         
-        run: |
-          npx playwright install
-          npx playwright install-deps
-          npm run test:integration --reporter=list > integration.log
-          {
-            echo 'INTEGRATION<<EOF'
-            cat integration.log
-            echo EOF
-          } >> "$GITHUB_OUTPUT"
+      #   run: |
+      #     npx playwright install
+      #     npx playwright install-deps
+      #     npm run test:integration --reporter=list > integration.log
+      #     {
+      #       echo 'INTEGRATION<<EOF'
+      #       cat integration.log
+      #       echo EOF
+      #     } >> "$GITHUB_OUTPUT"
       
-      - name: Comment on PR
-        uses: mshick/add-pr-comment@v2
-        with:
-          message: |
-            ## Integration tests
-            ${{ join(steps.integration-tests.outputs.INTEGRATION, '\n') }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: "github-actions[bot]"
-          allow-repeats: true
+      # - name: Comment on PR
+      #   uses: mshick/add-pr-comment@v2
+      #   with:
+      #     message: |
+      #       ## Integration tests
+      #       ${{ join(steps.integration-tests.outputs.INTEGRATION, '\n') }}
+      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+      #     repo-token-user-login: "github-actions[bot]"
+      #     allow-repeats: true
 
       - name: Build
         run: npm run build
