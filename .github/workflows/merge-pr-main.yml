@@ -66,9 +66,10 @@ jobs:
 
       - name: Integration tests
         id: integration-tests
-        # npx playwright install-deps
+        
         run: |
           npx playwright install
+          npx playwright install-deps
           npm run test:integration --reporter=list > integration.log
           {
             echo 'INTEGRATION<<EOF'
