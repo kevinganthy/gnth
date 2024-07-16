@@ -13,8 +13,8 @@
 		const isMobile = window.innerWidth < 1240;
 
 		const width = window.innerWidth - window.scrollY;
-		const margin = window.innerHeight / 4 - window.scrollY / 4;
 		const opacity = 1 - width / window.innerWidth;
+		const margin = window.innerHeight / 4 - window.scrollY / 4;
 
 		if ( !isMobile) {
 			if ( width < 420 ) {
@@ -24,7 +24,7 @@
 			 	img.style.marginTop = `3rem`;
 			} else {
 			 	header.style.width = `${width}px`;
-			 	img.style.marginTop = `calc(${margin}px + 3rem)`;
+			 	img.style.marginTop = `calc(${margin < 0 ? 0 : margin}px + 3rem)`;
 				nav.style.opacity = address.style.opacity = `${opacity}`;
 				span.style.opacity = `${1 - opacity}`;
 			}
@@ -107,10 +107,8 @@
 
 			@include mixins.large {
 				width: 50%;
-				height: auto;
-				max-height: 520px;
-				max-width: 520px;
-				margin: calc(50vh - 260px) auto 1rem;
+				max-width: 33vh;
+				margin: calc(100vh / 4 + 3rem) auto 1rem;
 			}
 		}
 
