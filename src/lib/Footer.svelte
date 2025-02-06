@@ -14,8 +14,8 @@
 			/>Adresse : 2B impasse de la cour des landes, 17600 Nieulle-sur-seudre<br />Siret : 919 205
 			088 00017
 		</p>
-		<p><strong>Contact</strong><br />Email : contact@gnth.fr<br />Téléphone : 06 68 28 51 97</p>
-		<p><strong>Editeur</strong><br />Identité : Kévin Ganthy<br />Email : contact@gnth.fr</p>
+		<p><strong>Contact</strong><br />Email : kevin.ganthy@gmail.com<br />Téléphone : 06 68 28 51 97</p>
+		<p><strong>Editeur</strong><br />Identité : Kévin Ganthy<br />Email : kevin.ganthy@gmail.com</p>
 		<p>
 			<strong>Hébergeur</strong><br />IONOS SARL au capital de 100 000 EUR - 7, place de la Gare BP
 			70109 57200 Sarreguemines Cedex France (contact téléphonique ou email : (+33) 9 70 80 89 11)

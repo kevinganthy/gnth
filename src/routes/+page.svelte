@@ -180,7 +180,7 @@
 		</div>
 
 		<div>
-			<Rate hours={7} isOption title="Option page supplémentaire">
+			<Rate hours={7} isOption title="Option pages supplémentaires">
 				<p>
 					Organisez votre contenu comme bon vous semble en présentant vos produits ou services en
 					détail. Offrez une expérience complète à vos visiteurs, sans compromis.

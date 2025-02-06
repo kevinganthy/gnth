@@ -118,7 +118,7 @@
 				Vous pouvez également nous contacter par téléphone au <a href="tel:+33668285197"
 					>06 68 28 51 97</a
 				>
-				ou par email à <a href="mailto:contact@gnth.fr">contact@gnth.fr</a>
+				ou par email à <a href="mailto:kevin.ganthy@gmail.com">kevin.ganthy@gmail.com</a>
 			</p>
 		</div>
 	</section>

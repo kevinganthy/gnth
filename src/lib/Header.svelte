@@ -64,7 +64,7 @@
 		</ul>
 	</nav>
 	<address>
-		<a href="mailto:contact@gnth.fr">contact@gnth.fr</a>
+		<a href="mailto:kevin.ganthy@gmail.com">kevin.ganthy@gmail.com</a>
 		<a href="tel:+33668285197">06 68 28 51 97</a>
 	</address>
 </header>
